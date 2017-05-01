@@ -47,15 +47,17 @@ def getnombre(r):
 
 	x = response.read()    
 	root = ET.fromstring(x)
-
+	ok = 0
 	for r in root.iter('registers'):
 		if r.text == '1':
-			for f in root.iter('field'):
-				x = f.text
-				return x
+			ok = 1
 		else:
 			return ""
 
+	if ok == 1:
+		for f in root.iter('field'):
+			x = f.text
+		return x
 	
 
 def getescencosud(rdv):
@@ -94,6 +96,7 @@ f.write(titulos)
 
 for run in range(1000000,25000000):
 #run = "1000005"
+
 	runx = str(run)
 	f.write(runx + ";")
 
@@ -102,7 +105,7 @@ for run in range(1000000,25000000):
 
 	n =  getnombre(runx + "-" + dv)
 	f.write(n + ";")
-
+	
 	c = getescencosud(runx + "-" + dv)
 	f.write(c + ";\n")
 
